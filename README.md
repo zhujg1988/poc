@@ -107,6 +107,20 @@ P.S. 文件加密以后，加密标识尾只有在关机重启且不开驱动的
   
 11.使用编译好的或安装包中的PocUserPanel配置各种参数  
 </br><img src="https://user-images.githubusercontent.com/41336794/173342125-2198e70f-8590-4002-ab7f-5dc5ef899720.JPG"></a></br>  
+## Documentation：
+**PreRead回调机制技术分析文档** - 详细解释了notepad打开txt文件如何触发PreRead回调的完整机制：  
+📑 **[PREREAD_ANALYSIS_INDEX.md](PREREAD_ANALYSIS_INDEX.md)** - 文档索引和导航（推荐从这里开始）  
+📄 **[PREREAD_CALLBACK_ANALYSIS.md](PREREAD_CALLBACK_ANALYSIS.md)** - 技术深度分析（代码实现细节）  
+📊 **[PREREAD_FLOW_DIAGRAM.md](PREREAD_FLOW_DIAGRAM.md)** - 可视化流程图（架构和流程）  
+
+这些文档详细分析了：
+- Minifilter框架的驱动注册和回调机制  
+- IRP_MJ_READ如何触发PocPreReadOperation  
+- 双缓冲技术实现原理  
+- 授权进程和非授权进程的处理差异  
+- 文件加密状态管理和StreamContext机制  
+- 完整的调用流程和源代码位置参考  
+
 ## Unfixed & Prospect：
 1.授权进程"另存为"会导致明文泄露，这里可以在PreCreate判断一下是否是授权进程+有写入倾向，是，则不过滤扩展名以及路径，让文件进入驱动控制。  
 2.将文件标识尾改成文件标识头的方式，防止意外断电的情况。  
