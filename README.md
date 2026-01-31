@@ -107,6 +107,52 @@ P.S. 文件加密以后，加密标识尾只有在关机重启且不开驱动的
   
 11.使用编译好的或安装包中的PocUserPanel配置各种参数  
 </br><img src="https://user-images.githubusercontent.com/41336794/173342125-2198e70f-8590-4002-ab7f-5dc5ef899720.JPG"></a></br>  
+## Tutorial Version - 教学版：
+**全新教学版驱动** - 专为学习透明加解密原理设计的简化版本：  
+🎓 **[TUTORIAL.md](TUTORIAL.md)** - 教学版总览和使用指南（推荐从这里开始）  
+📁 **[TutorialMinifilter/](TutorialMinifilter/)** - 教学版源代码目录  
+　├─ **[README.md](TutorialMinifilter/README.md)** - 快速开始和测试指南  
+　├─ **[ARCHITECTURE.md](TutorialMinifilter/ARCHITECTURE.md)** - 架构图解和流程详解  
+　└─ 源代码文件（共7个，~500行）  
+
+**教学版特点**：  
+- 💡 **极简设计**：去除复杂特性，只保留核心逻辑  
+- 📖 **详细注释**：每个关键步骤都有中文注释  
+- 🔑 **简单加密**：使用XOR而非AES，便于理解  
+- 🎯 **单一场景**：专注notepad读写txt文件  
+- 📊 **可视化**：大量流程图和架构图  
+- ⚡ **快速上手**：~500行代码实现完整功能  
+
+**完整版 vs 教学版对比**：  
+
+| 特性 | 完整版 (FOKS-TROT) | 教学版 (TutorialMinifilter) |
+|------|-------------------|---------------------------|
+| 代码量 | ~5000行 | ~500行 |
+| 文件数 | 20+个 | 7个 |
+| 加密算法 | AES-128 + 密文挪用 | 简单XOR |
+| 进程管理 | 授权/非授权/备份 | 只有notepad.exe |
+| 文件类型 | txt/docx/xlsx/pptx | 只有.txt |
+| 学习曲线 | 陡峭 | 平缓 |
+| 适用场景 | 生产环境、深入研究 | 学习原理、快速入门 |
+
+**学习路径建议**：  
+1. 先学教学版，理解透明加解密的核心原理  
+2. 再研究完整版，掌握生产级实现技术  
+
+## Documentation - 技术分析文档：
+**PreRead回调机制技术分析文档** - 详细解释了notepad打开txt文件如何触发PreRead回调的完整机制：  
+📑 **[PREREAD_ANALYSIS_INDEX.md](PREREAD_ANALYSIS_INDEX.md)** - 文档索引和导航（推荐从这里开始）  
+📄 **[PREREAD_CALLBACK_ANALYSIS.md](PREREAD_CALLBACK_ANALYSIS.md)** - 技术深度分析（代码实现细节）  
+📊 **[PREREAD_FLOW_DIAGRAM.md](PREREAD_FLOW_DIAGRAM.md)** - 可视化流程图（架构和流程）  
+
+这些文档详细分析了：
+- Minifilter框架的驱动注册和回调机制  
+- IRP_MJ_READ如何触发PocPreReadOperation  
+- 双缓冲技术实现原理  
+- 授权进程和非授权进程的处理差异  
+- 文件加密状态管理和StreamContext机制  
+- 完整的调用流程和源代码位置参考  
+
 ## Unfixed & Prospect：
 1.授权进程"另存为"会导致明文泄露，这里可以在PreCreate判断一下是否是授权进程+有写入倾向，是，则不过滤扩展名以及路径，让文件进入驱动控制。  
 2.将文件标识尾改成文件标识头的方式，防止意外断电的情况。  

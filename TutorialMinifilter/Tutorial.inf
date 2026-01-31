@@ -1,0 +1,92 @@
+;;;
+;;; Tutorial Minifilter - 教学版透明加解密驱动
+;;;
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = "ActivityMonitor"
+ClassGuid   = {b86dff51-a31e-4bac-b3cf-e2cfe75c9f82}
+Provider    = %ManufacturerName%
+DriverVer   = 01/31/2026,1.0.0.0
+CatalogFile = Tutorial.cat
+
+[DestinationDirs]
+DefaultDestDir          = 12
+Tutorial.DriverFiles     = 12            ;%windir%\system32\drivers
+
+;;
+;; Default install sections
+;;
+
+[DefaultInstall]
+OptionDesc          = %ServiceDescription%
+CopyFiles           = Tutorial.DriverFiles
+
+[DefaultInstall.Services]
+AddService          = %ServiceName%,,Tutorial.Service
+
+;;
+;; Default uninstall sections
+;;
+
+[DefaultUninstall]
+DelFiles   = Tutorial.DriverFiles
+
+[DefaultUninstall.Services]
+DelService = %ServiceName%,0x200      ;Ensure service is stopped before deleting
+
+;
+; Services Section
+;
+
+[Tutorial.Service]
+DisplayName      = %ServiceName%
+Description      = %ServiceDescription%
+ServiceBinary    = %12%\Tutorial.sys
+Dependencies     = "FltMgr"
+ServiceType      = 2                    ;SERVICE_FILE_SYSTEM_DRIVER
+StartType        = 3                    ;SERVICE_DEMAND_START
+ErrorControl     = 1                    ;SERVICE_ERROR_NORMAL
+LoadOrderGroup   = "FSFilter Activity Monitor"
+AddReg           = Tutorial.AddRegistry
+
+;
+; Registry Modifications
+;
+
+[Tutorial.AddRegistry]
+HKR,,"DebugFlags",0x00010001 ,0x0
+HKR,,"SupportedFeatures",0x00010001,0x3
+HKR,"Instances","DefaultInstance",0x00000000,%DefaultInstance%
+HKR,"Instances\"%Instance1.Name%,"Altitude",0x00000000,%Instance1.Altitude%
+HKR,"Instances\"%Instance1.Name%,"Flags",0x00010001,%Instance1.Flags%
+
+;
+; Copy Files
+;
+
+[Tutorial.DriverFiles]
+Tutorial.sys
+
+[SourceDisksFiles]
+Tutorial.sys = 1,,
+
+[SourceDisksNames]
+1 = %DiskId1%,,,
+
+;;
+;; String Section
+;;
+
+[Strings]
+ManufacturerName        = "Tutorial"
+ServiceDescription      = "Tutorial Minifilter - 教学版透明加解密驱动"
+ServiceName             = "Tutorial"
+DriverName              = "Tutorial"
+DiskId1                 = "Tutorial Device Installation Disk"
+
+;Instances specific information.
+DefaultInstance         = "Tutorial Instance"
+Instance1.Name          = "Tutorial Instance"
+Instance1.Altitude      = "370030"
+Instance1.Flags         = 0x0              ; Allow all detachments
