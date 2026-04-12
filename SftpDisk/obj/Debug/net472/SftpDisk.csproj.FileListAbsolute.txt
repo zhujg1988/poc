@@ -1,0 +1,6 @@
+/home/runner/work/poc/poc/SftpDisk/obj/Debug/net472/SftpDisk.csproj.AssemblyReference.cache
+/home/runner/work/poc/poc/SftpDisk/obj/Debug/net472/SftpDisk.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/poc/poc/SftpDisk/obj/Debug/net472/SftpDisk.AssemblyInfoInputs.cache
+/home/runner/work/poc/poc/SftpDisk/obj/Debug/net472/SftpDisk.AssemblyInfo.cs
+/home/runner/work/poc/poc/SftpDisk/obj/Debug/net472/SftpDisk.csproj.CoreCompileInputs.cache
+/home/runner/work/poc/poc/SftpDisk/obj/Debug/net472/SftpDisk.sourcelink.json
