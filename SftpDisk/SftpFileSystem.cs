@@ -206,7 +206,7 @@ namespace SftpDisk
                     {
                         stream = _sftp.Open(path, FileMode.Open, FileAccess.ReadWrite);
                     }
-                    catch
+                    catch (Exception ex) when (ex is UnauthorizedAccessException || ex is SftpPermissionDeniedException)
                     {
                         stream = _sftp.Open(path, FileMode.Open, FileAccess.Read);
                     }
@@ -257,7 +257,11 @@ namespace SftpDisk
                     ctx.Stream = null;
                     _sftp.Delete(ctx.RemotePath);
                 }
-                catch { /* best-effort */ }
+                catch (Exception ex)
+                {
+                    // Log but do not propagate: Cleanup must not throw.
+                    Console.Error.WriteLine($"[SftpDisk] Cleanup delete failed for '{ctx.RemotePath}': {ex.Message}");
+                }
             }
         }
 
@@ -431,7 +435,10 @@ namespace SftpDisk
                     if ((long)newSize < currentLen)
                     {
                         // Truncate: read the content up to newSize, rewrite the file.
-                        // (SSH.NET SftpFileStream does not expose SetLength.)
+                        // SSH.NET SftpFileStream does not expose SetLength.
+                        // NOTE: this reads the entire retained portion into memory, which may be
+                        // significant for large files. A future improvement is to use SSH_FXP_FSETSTAT
+                        // with SSH_FILEXFER_ATTR_SIZE to truncate directly on the server.
                         ctx.Stream.Position = 0;
                         var content = new byte[newSize];
                         int totalRead = 0;
@@ -592,6 +599,7 @@ namespace SftpDisk
                 // Advance past the marker (return entries strictly after it).
                 if (marker != null)
                 {
+                    enumCtx.Index = entries.Count; // default: marker not found, skip all
                     for (int i = 0; i < entries.Count; i++)
                     {
                         if (StringComparer.OrdinalIgnoreCase.Compare(entries[i].Item1, marker) > 0)
@@ -599,7 +607,6 @@ namespace SftpDisk
                             enumCtx.Index = i;
                             break;
                         }
-                        enumCtx.Index = entries.Count; // all entries <= marker
                     }
                 }
 

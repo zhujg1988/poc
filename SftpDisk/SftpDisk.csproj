@@ -8,8 +8,6 @@
     <RootNamespace>SftpDisk</RootNamespace>
     <Nullable>enable</Nullable>
     <LangVersion>9.0</LangVersion>
-    <Platforms>x64</Platforms>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <!--

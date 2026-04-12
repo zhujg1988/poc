@@ -10,7 +10,7 @@
         "projectUniqueName": "/home/runner/work/poc/poc/SftpDisk/SftpDisk.csproj",
         "projectName": "SftpDisk",
         "projectPath": "/home/runner/work/poc/poc/SftpDisk/SftpDisk.csproj",
-        "packagesPath": "/home/runner/.nuget/packages/",
+        "packagesPath": "/tmp/codeql-scratch-e9eeef54bf98651b/dbs/csharp/working/packages",
         "outputPath": "/home/runner/work/poc/poc/SftpDisk/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
