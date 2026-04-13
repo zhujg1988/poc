@@ -264,9 +264,11 @@ NTSTATUS SftpFileSystem::Create(
         FillFileInfo(FileInfo, attrs, false);
     }
 
-    if (NormalizedName && NormalizedNameSize > 0)
-        wcsncpy(NormalizedName, FileName,
-                NormalizedNameSize / sizeof(WCHAR) - 1);
+    if (NormalizedName && NormalizedNameSize > 0) {
+        ULONG maxChars = static_cast<ULONG>(NormalizedNameSize / sizeof(WCHAR)) - 1;
+        wcsncpy(NormalizedName, FileName, maxChars);
+        NormalizedName[maxChars] = L'\0';
+    }
 
     *PFileNode = ctx;
     *PFileDesc = ctx;
@@ -322,9 +324,11 @@ NTSTATUS SftpFileSystem::Open(
         FillFileInfo(FileInfo, attrs, false);
     }
 
-    if (NormalizedName && NormalizedNameSize > 0)
-        wcsncpy(NormalizedName, FileName,
-                NormalizedNameSize / sizeof(WCHAR) - 1);
+    if (NormalizedName && NormalizedNameSize > 0) {
+        ULONG maxChars = static_cast<ULONG>(NormalizedNameSize / sizeof(WCHAR)) - 1;
+        wcsncpy(NormalizedName, FileName, maxChars);
+        NormalizedName[maxChars] = L'\0';
+    }
 
     *PFileNode = ctx;
     *PFileDesc = ctx;

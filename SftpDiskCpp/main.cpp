@@ -112,7 +112,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // ── Winsock initialisation ───────────────────────────────────────────────
+    // ── Winsock initialization ───────────────────────────────────────────────
 
     WSADATA wsaData;
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // ── libssh2 global initialisation ────────────────────────────────────────
+    // ── libssh2 global initialization ────────────────────────────────────────
 
     if (libssh2_init(0) != 0) {
         fprintf(stderr, "ERROR: libssh2_init failed.\n");
